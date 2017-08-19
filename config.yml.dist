@@ -1,0 +1,30 @@
+# period, in seconds, at which capture should occur
+capture_period: 2
+
+# directory in which to stage files before upload
+staging_dir: "output"
+
+# options to pass to fswebcam
+fswebcam_options: [
+    #'-F', '5', '-S', '4',
+    #'--resolution 1280x720',
+    #'--set hue=10',
+    '--set', 'power line frequency=60 Hz',
+    '--set', 'contrast=40',
+]
+
+# number of parallel S3 upload threads to use
+upload_parallelism: 5
+
+# AWS access information
+aws_access_key_id: '...'
+aws_secret_access_key: '...'
+
+# bucket for frames
+aws_bucket: '...'
+
+# region containing the bucket
+aws_region: 'us-east-1'
+
+# object name prefix under which to store frames (this should end with `/` or be empty)
+aws_object_prefix: ''

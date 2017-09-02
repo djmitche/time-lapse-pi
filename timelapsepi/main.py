@@ -16,7 +16,7 @@ def main():
 
     cfg = config.Config()
     if not os.path.isdir(cfg.staging_dir):
-        so.makedirs(cfg.staging_dir)
+        os.makedirs(cfg.staging_dir)
 
     if len(sys.argv) < 2:
         raise Exception("USAGE: time-lapse-pi capture")

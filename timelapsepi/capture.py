@@ -50,4 +50,8 @@ class Capture(object):
         if proc.returncode != 0:
             raise Exception("fswebcam failed:\n{}\n{}".format(
                 stdout.decode('utf-8'), stderr.decode('utf-8')))
+        if not os.path.exists(filename):
+            # fswebcam likes to fail and exit(0)
+            raise Exception("fswebcam failed:\n{}\n{}".format(
+                stdout.decode('utf-8'), stderr.decode('utf-8')))
         self.log.info('captured %s', filename)

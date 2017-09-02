@@ -5,6 +5,7 @@ import logging
 
 from . import (
     capture,
+    latest,
     dropdark,
     upload,
     config,
@@ -26,7 +27,10 @@ def main():
         cap = capture.Capture(cfg, loop)
         asyncio.ensure_future(cap.run())
 
-        dropd = dropdark.DropDark(cfg, loop, cap.output)
+        lat = latest.Latest(cfg, loop, cap.output)
+        asyncio.ensure_future(lat.run())
+
+        dropd = dropdark.DropDark(cfg, loop, lat.output)
         asyncio.ensure_future(dropd.run())
 
         upl = upload.Upload(cfg, loop, dropd.output)

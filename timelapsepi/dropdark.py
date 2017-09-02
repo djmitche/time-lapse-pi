@@ -2,7 +2,6 @@ import os
 import concurrent
 import asyncio
 import logging
-import boto3
 from PIL import Image
 
 

@@ -31,6 +31,9 @@ class Upload(object):
         net_failures = 0
         while True:
             filename = await self.input.get()
+            if not os.path.exists(filename):
+                self.input.task_done()
+                continue
             fut = self.loop.run_in_executor(self.executor, self.upload, filename)
 
             @fut.add_done_callback
@@ -52,4 +55,7 @@ class Upload(object):
         obj = self.bucket.Object(self.config.aws_object_prefix + os.path.basename(filename))
         obj.upload_file(filename)
         self.log.info("uploaded %s", filename)
-        os.unlink(filename)
+        try:
+            os.unlink(filename)
+        except Exception:
+            pass

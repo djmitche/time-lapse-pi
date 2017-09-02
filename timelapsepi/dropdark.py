@@ -25,7 +25,7 @@ class DropDark(object):
         while True:
             filename = await self.input.get()
             darkness = self.darkness(filename)
-            self.log.info('darkness: %2.2f%%', darkness * 100)
+            self.log.info('darkness: %2.2f%%', darkness)
             if darkness <= self.threshold:
                 await self.output.put(filename)
             else:

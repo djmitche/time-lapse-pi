@@ -23,11 +23,6 @@ class Upload(object):
         self.bucket = s3.Bucket(config.aws_bucket)
 
     async def run(self):
-        # stuff any pre-existing files in the staging_dir into the queue
-        for f in os.listdir(self.config.staging_dir):
-            filename = os.path.join(self.config.staging_dir, f)
-            await self.input.put(filename)
-
         net_failures = 0
         while True:
             filename = await self.input.get()

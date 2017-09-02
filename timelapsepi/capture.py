@@ -18,7 +18,6 @@ class Capture(object):
             filename = os.path.join(self.config.staging_dir, f)
             await self.output.put(filename)
 
-
         def calc_next():
             period = self.config.capture_period
             now = time.time()

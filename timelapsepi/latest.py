@@ -7,7 +7,7 @@ import shutil
 
 
 class Latest(object):
-    log = logging.getLogger('dropdark')
+    log = logging.getLogger('latest')
 
     def __init__(self, config, loop, input):
         self.loop = loop

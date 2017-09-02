@@ -17,6 +17,8 @@ def main():
     loop = asyncio.get_event_loop()
 
     cfg = config.Config()
+    asyncio.ensure_future(cfg.run())
+
     if not os.path.isdir(cfg.staging_dir):
         os.makedirs(cfg.staging_dir)
 

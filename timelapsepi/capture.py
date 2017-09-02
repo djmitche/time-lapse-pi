@@ -18,9 +18,9 @@ class Capture(object):
             filename = os.path.join(self.config.staging_dir, f)
             await self.output.put(filename)
 
-        period = self.config.capture_period
 
         def calc_next():
+            period = self.config.capture_period
             now = time.time()
             now -= now % period
             return now + period
@@ -30,7 +30,7 @@ class Capture(object):
             now = next
             if next > time.time():
                 await asyncio.sleep(next - time.time())
-                next += period
+                next += self.config.capture_period
             else:
                 self.log.warning("capture is behind schedule by %s seconds; skipping frame(s)", time.time() - next)
                 next = calc_next()

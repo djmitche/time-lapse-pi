@@ -5,6 +5,7 @@ import logging
 
 from . import (
     capture,
+    dropdark,
     upload,
     config,
 )
@@ -25,7 +26,10 @@ def main():
         cap = capture.Capture(cfg, loop)
         asyncio.ensure_future(cap.run())
 
-        upl = upload.Upload(cfg, loop, cap.output)
+        dropd = dropdark.DropDark(cfg, loop, cap.output)
+        asyncio.ensure_future(dropd.run())
+
+        upl = upload.Upload(cfg, loop, dropd.output)
         asyncio.ensure_future(upl.run())
 
         try:

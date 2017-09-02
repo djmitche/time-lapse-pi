@@ -28,3 +28,7 @@ aws_region: 'us-east-1'
 
 # object name prefix under which to store frames (this should end with `/` or be empty)
 aws_object_prefix: ''
+
+# filter dark images; this is the % of very dark pixels in the image, so a
+# higher number will filter fewer frames
+darkness_threshold: 95

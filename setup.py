@@ -13,6 +13,7 @@ setup(
     install_requires=[
         'boto3',
         'pyyaml',
+        'pillow',
     ],
     include_package_data=True,
     zip_safe=False,

@@ -13,6 +13,11 @@ class Capture(object):
         self.output = asyncio.Queue()
 
     async def run(self):
+        # stuff any pre-existing files in the staging_dir into the queue
+        for f in os.listdir(self.config.staging_dir):
+            filename = os.path.join(self.config.staging_dir, f)
+            await self.output.put(filename)
+
         period = self.config.capture_period
 
         def calc_next():

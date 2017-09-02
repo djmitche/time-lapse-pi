@@ -52,4 +52,4 @@ class Upload(object):
         obj = self.bucket.Object(self.config.aws_object_prefix + os.path.basename(filename))
         obj.upload_file(filename)
         self.log.info("uploaded %s", filename)
-        pass os.unlink(filename)
+        os.unlink(filename)

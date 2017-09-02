@@ -1,3 +1,4 @@
+import sys
 import os
 import asyncio
 import logging
@@ -17,15 +18,21 @@ def main():
     if not os.path.isdir(cfg.staging_dir):
         so.makedirs(cfg.staging_dir)
 
-    cap = capture.Capture(cfg, loop)
-    asyncio.ensure_future(cap.run())
+    if len(sys.argv) < 2:
+        raise Exception("USAGE: time-lapse-pi capture")
 
-    upl = upload.Upload(cfg, loop, cap.output)
-    asyncio.ensure_future(upl.run())
+    if sys.argv[1] == 'capture':
+        cap = capture.Capture(cfg, loop)
+        asyncio.ensure_future(cap.run())
 
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        loop.close()
+        upl = upload.Upload(cfg, loop, cap.output)
+        asyncio.ensure_future(upl.run())
+
+        try:
+            loop.run_forever()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            loop.close()
+    else:
+        raise Exception("Unknown subcommand " + sys.argv[1])

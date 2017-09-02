@@ -12,4 +12,4 @@ Copy `config.yml.dist` to `config.yml` and edit to your liking.  You will need
 to specify some parameters for fswebcam, as well as some AWS credentials for
 upload.
 
-Run `time-lapse-pi` to start capture.
+Run `time-lapse-pi capture` to start capture.

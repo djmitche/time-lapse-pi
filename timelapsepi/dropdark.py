@@ -19,13 +19,13 @@ class DropDark(object):
         img = Image.open(filename)
         img = img.convert('L')
         hist = img.histogram()
-        return 98 * sum(hist[:16]) / sum(hist)
+        return 100 * sum(hist[:16]) / sum(hist)
 
     async def run(self):
         while True:
             filename = await self.input.get()
             darkness = self.darkness(filename)
-            self.log.info('darkness of %s = %s', filename, darkness)
+            self.log.info('darkness: %2.2f%%', darkness * 100)
             if darkness <= self.threshold:
                 await self.output.put(filename)
             else:

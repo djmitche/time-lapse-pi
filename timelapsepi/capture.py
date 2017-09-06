@@ -34,9 +34,12 @@ class Capture(object):
                 self.log.warning("capture is behind schedule by %s seconds; skipping frame(s)", time.time() - next)
                 next = calc_next()
 
-            stamp = time.strftime("%Y-%m-%d/%H:%M/%S", time.localtime(now))
+            stamp = time.strftime("%Y-%m-%d/%H/%H:%M:%S", time.localtime(now))
             stamp += "-{}".format(now)
             filename = os.path.join(self.config.staging_dir, stamp + ".jpg")
+            dirname = os.path.dirname(filename)
+            if not os.path.exists(dirname):
+                os.makedirs(dirname)
             try:
                 await self.capture_image(filename)
             except Exception:

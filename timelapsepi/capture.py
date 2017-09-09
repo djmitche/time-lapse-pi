@@ -14,9 +14,11 @@ class Capture(object):
 
     async def run(self):
         # stuff any pre-existing files in the staging_dir into the queue
-        for f in os.listdir(self.config.staging_dir):
-            filename = os.path.join(self.config.staging_dir, f)
-            await self.output.put(filename)
+        for (dirpath, dirnames, filenames) in os.walk(self.config.staging_dir):
+            for filename in filenames:
+                filename = os.path.join(dirpath, filename)
+                self.log.info("injecting found file %s", filename)
+                await self.output.put(filename)
 
         def calc_next():
             period = self.config.capture_period

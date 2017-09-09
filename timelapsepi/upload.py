@@ -47,7 +47,9 @@ class Upload(object):
                 self.input.task_done()
 
     def upload(self, filename):
-        obj = self.bucket.Object(self.config.aws_object_prefix + os.path.basename(filename))
+        assert filename.startswith(self.config.staging_dir)
+        basename = filename[:len(self.config.staging_dir)].lstrip('/')
+        obj = self.bucket.Object(self.config.aws_object_prefix + basename)
         obj.upload_file(filename)
         self.log.info("uploaded %s", filename)
         try:

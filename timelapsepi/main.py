@@ -2,6 +2,7 @@ import sys
 import os
 import asyncio
 import logging
+from contextlib import suppress
 
 from . import (
     capture,
@@ -43,6 +44,10 @@ def main():
         except KeyboardInterrupt:
             pass
         finally:
+            for t in asyncio.Task.all_tasks():
+                t.cancel()
+                with suppress(asyncio.CancelledError):
+                    loop.run_until_complete(t)
             loop.close()
     else:
         raise Exception("Unknown subcommand " + sys.argv[1])

@@ -4,6 +4,20 @@ capture_period: 2
 # directory in which to stage files before upload
 staging_dir: "output"
 
+# directory in which downloaded files are found when encoding
+img_dir: "images"
+
+# directory in which videos are written
+video_dir: "videos"
+
+ffmpeg_input_options: [
+    '-s', '1280x720',
+]
+ffmpeg_output_options: [
+    '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p',
+]
+ffmpeg_output_extension: 'mp4'
+
 # options to pass to fswebcam
 fswebcam_options: [
     #'-F', '5', '-S', '4',

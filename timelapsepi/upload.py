@@ -48,7 +48,7 @@ class Upload(object):
 
     def upload(self, filename):
         assert filename.startswith(self.config.staging_dir)
-        basename = filename[:len(self.config.staging_dir)].lstrip('/')
+        basename = filename[len(self.config.staging_dir)+1:]
         obj = self.bucket.Object(self.config.aws_object_prefix + basename)
         obj.upload_file(filename)
         self.log.info("uploaded %s", filename)

@@ -1,4 +1,5 @@
-# period, in seconds, at which capture should occur
+# period, in seconds, at which capture should occur; 0 indicates "as fast as possible"
+# which probably still isn't very fast
 capture_period: 2
 
 # directory in which to stage files before upload

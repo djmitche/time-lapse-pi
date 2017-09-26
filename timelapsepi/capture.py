@@ -23,18 +23,24 @@ class Capture(object):
         def calc_next():
             period = self.config.capture_period
             now = time.time()
-            now -= now % period
-            return now + period
+            if period:
+                now -= now % period
+                return now + period
+            else:
+                return now
         next = calc_next()
 
         while True:
-            now = next
-            if next > time.time():
-                await asyncio.sleep(next - time.time())
-                next += self.config.capture_period
+            if self.config.capture_period > 0:
+                now = next
+                if next > time.time():
+                    await asyncio.sleep(next - time.time())
+                    next += self.config.capture_period
+                else:
+                    self.log.warning("capture is behind schedule by %s seconds; skipping frame(s)", time.time() - next)
+                    next = calc_next()
             else:
-                self.log.warning("capture is behind schedule by %s seconds; skipping frame(s)", time.time() - next)
-                next = calc_next()
+                now = next = time.time()
 
             stamp = time.strftime("%Y-%m-%d/%H/%H:%M:%S", time.localtime(now))
             stamp += "-{}".format(now)
